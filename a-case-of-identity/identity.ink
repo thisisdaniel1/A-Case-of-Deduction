@@ -87,7 +87,7 @@
                     
         * *     [Ask about Hosmer's general appearance during the party.]
                         
-        * *     [Ask about the 
+        * *     [Ask about the ]
         
         - -     -> sutherlandHub2
 === investigation
