@@ -10,4 +10,5 @@ router . post ( '/login' , checkNotAuthenticated , controller . postLogin );
 router . post ( '/register' , checkNotAuthenticated , controller . postRegister );
 router . post ( '/logout' , checkAuthenticated , controller . postLogout );
 
+
 module . exports = router ; 

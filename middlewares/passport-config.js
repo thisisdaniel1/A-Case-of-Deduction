@@ -3,6 +3,13 @@ const passport = require ( 'passport' );
 const users = require ( '../models/users-model' );
 const bcrypt = require ( 'bcrypt' );
 
+function setupPassport (){
+ const formNames = { usernameField: 'email' , passwordField: 'password' };
+ const localStrategy = new Strategy ( formNames , authenticateUser );
+ passport . use ( localStrategy );
+ passport . serializeUser ( ( user , done ) => done (null, user . id ) );
+ passport. deserializeUser ( (id,done) => done ( null , users. findUser ( 'id' ,id)) );
+}
 async function authenticateUser ( email , password , done ){
     const user = users . findUser ( 'email' , email );
     if ( user === undefined ){
@@ -16,13 +23,7 @@ async function authenticateUser ( email , password , done ){
     }
    }
 
-function setupPassport (){
- const formNames = { usernameField: 'email' , passwordField: 'password' };
- const localStrategy = new Strategy ( formNames , authenticateUser );
- passport . use ( localStrategy );
- passport . serializeUser ( ( user , done ) => done (null, user . id ) );
- passport. deserializeUser ( (id,done) => done ( null , users. findUser ( 'id' ,id)) );
-}
 
 setupPassport ();
+
 module . exports = passport ;
