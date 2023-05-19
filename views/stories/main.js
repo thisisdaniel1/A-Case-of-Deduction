@@ -138,6 +138,11 @@
                         return;
                     }
                 }
+
+                else if (tag == "WIN"){
+                    console.log("WIN");
+                    
+                }
             }
 
             // Create paragraph element (initially hidden)

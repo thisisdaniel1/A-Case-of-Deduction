@@ -1,4 +1,4 @@
--> room
+    -> room
     
     === room
     
@@ -35,6 +35,18 @@
         * *     (win_option) {win_condition()}
                 [Confer to Dr. Watson as to the answer.]
                 "Watson, could you give your thoughts as to the current situation?"
+                
+                "Why Holmes isn't it simple. The groom stole her heart and then ran off with it!"
+                
+                "Can't you see. The stepfather benefits greatly from the current arrangement. What with the regular payments from Miss Sutherland's account and would likewise suffer greatly had she left."
+                
+                "Oh, we must surely pursue this to the letter."
+                
+                * * * *     "No, Watson. Even the law has its bounds."
+                            # WIN
+                            -> END
+                
+                
         
         * *     (family_questions) [Ask about why she wants to talk to you?]
                 "Why did you come away to consult me in such a hurry?"
@@ -372,8 +384,8 @@
                     ~ x++
             }
             
-            // need to have seen at least 3 of the "win" choices
-            {x > 3:
+            // need to have seen at least 6 of the "win" choices
+            {x > 5:
                 ~ return true
             }
             
