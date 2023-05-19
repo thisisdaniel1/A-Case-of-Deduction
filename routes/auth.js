@@ -1,4 +1,3 @@
-// require express router, passport
 const router = require("express").Router();
 const passport = require("passport");
 
@@ -75,26 +74,6 @@ router.get("/auth/logout", function(req, res, next){
         res.redirect("/");
     });
 });
-
-router . get ( '/identity', getIdentity );
-function getIdentity(req, response){
-    try{                                    // if successful, go to home
-        response.render("identity");
-    }
-    catch{                                  // if not successful, stay on story (index.ejs)
-        response.render("identity");
-    }
-}
-
-router . post ( '/identity', postIdentity );
-function postIdentity(request, response){
-    try{                                    // if successful, go to home
-        response . redirect ( '/identity' );
-    }
-    catch{                                  // if not successful, stay on story (index.ejs)
-        response.redirect('/home');
-    }
-}
 
 // export router
 module.exports = router;

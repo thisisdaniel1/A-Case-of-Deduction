@@ -1,4 +1,3 @@
-// require express router multer
 const router = require("express").Router();
 const multer = require("multer");
 
@@ -17,8 +16,6 @@ var storage = multer.diskStorage({
 const Story = require("../models/Story");
 var upload = multer({storage: storage});
 
-// create routes
-// get home
 router.get("/", (req, res)=>{
     // if user is logged in, redirect to home page
     if(req.isAuthenticated()){
@@ -29,7 +26,6 @@ router.get("/", (req, res)=>{
     }
 });
 
-// get register page
 router.get("/register", (req, res)=>{
     // if user is logged in, redirect to home page
     if(req.isAuthenticated()){
@@ -40,7 +36,6 @@ router.get("/register", (req, res)=>{
     }
 });
 
-// login page
 router.get("/login", (req, res)=>{
     // if user is logged in, redirect to home page
     if(req.isAuthenticated()){
@@ -51,7 +46,6 @@ router.get("/login", (req, res)=>{
     }
 });
 
-/* get stories page (fetch data from db and send to stories page)
 router.get("/home", async (req, res)=>{
     try{
         // fetch all stories from db
@@ -62,11 +56,9 @@ router.get("/home", async (req, res)=>{
         res.send(err);
     }
 });
-*/
 
-// get submit page
 router.get("/submit", (req, res)=>{
-    // if user is logged in, redirect to submit page
+    // if user is logged in, stay on submit page
     if(req.isAuthenticated()){
         res.render("submit")
     }
@@ -80,20 +72,13 @@ router.post("/submit", upload.single("image"), async (req, res) => {
     try{
         const story = new Story({
             name: req.body.name,
-            /*
             img:{
                 data: fs.readFileSync(path.join(__dirname + "/views/assets/" + req.file.filename)),
                 contentType: "image/png"
             }
-            */
         });
-        /*
-        const savedImage = await Story.create(story);
-        res.send(savedImage);
-        */
 
-        const saveStory = story.save();
-        // !saveStory && res.redirect("/submit");
+        story.save();
 
         // redirect to home if sucessful
         res.redirect("/home");
@@ -103,8 +88,34 @@ router.post("/submit", upload.single("image"), async (req, res) => {
     }
 });
 
+router.get ( '/identity', getIdentity );
+function getIdentity(req, res){
+    try{                                    // if successful, go to home
+        res.render("identity");
+    }
+    catch{                                  // if not successful, stay on story (index.ejs)
+        res.render("identity");
+    }
+}
 
+router.get("/login", (req, res)=>{
+    // if user is logged in, redirect to home page
+    if(req.isAuthenticated()){
+        res.redirect("/home")
+    }
+    else{
+        res.render("login");
+    }
+});
 
-// ratings
+router.post ( '/identity', postIdentity );
+function postIdentity(req, res){
+    try{                                    // if successful, go to home
+        res.redirect ( '/identity' );
+    }
+    catch{                                  // if not successful, stay on story (index.ejs)
+        res.redirect('/home');
+    }
+}
 
 module.exports = router;
