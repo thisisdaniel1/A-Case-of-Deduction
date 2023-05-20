@@ -47,6 +47,9 @@ router.get("/login", (req, res)=>{
 });
 
 router.get("/home", async (req, res)=>{
+    if(!req.isAuthenticated()){
+        res.render("index")
+    }
     try{
         // fetch all stories from db
         const allStories = await Story.find();
@@ -72,10 +75,12 @@ router.post("/submit", upload.single("image"), async (req, res) => {
     try{
         const story = new Story({
             name: req.body.name,
+            /*
             img:{
                 data: fs.readFileSync(path.join(__dirname + "/views/assets/" + req.file.filename)),
                 contentType: "image/png"
             }
+            */
         });
 
         story.save();
